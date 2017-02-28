@@ -63,9 +63,11 @@
     }
     var wrapped = function() {
       var args = arguments;
-      return scope.$evalAsync(function() {
-         return fn.apply(null, args);
+      return new Promise(function(resolve) {
+        scope.$evalAsync(function() {
+         resolve(fn.apply(null, args));
        });
+      });
     };
     wrapped.wrappedInApply = true;
     return wrapped;
